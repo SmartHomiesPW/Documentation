@@ -1,0 +1,1388 @@
+---
+openapi: 3.0.0
+info:
+  title: smart-home-api
+  description: The API for the Smart Home Server
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/10710710710710710710/SmartHome/1.0.1
+  description: SwaggerHub API Auto Mocking
+paths:
+  /systems:
+    get:
+      tags:
+      - Systems
+      summary: Get information about systems
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/System'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /systems/{systemId}:
+    get:
+      tags:
+      - Systems
+      summary: Get information about specific system
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/System'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /systems/{systemId}/boards:
+    get:
+      tags:
+      - Boards
+      summary: Get information about all boards within specific system
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /systems/{systemId}/boards/{boardId}:
+    get:
+      tags:
+      - Boards
+      summary: Get information about specific board within specific system
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: boardId
+        in: path
+        description: The ID of the board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /systems/{systemId}/boards/{boardId}/devices:
+    get:
+      tags:
+      - Devices
+      summary: Get information about all devices connected to specific board within specific system
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: boardId
+        in: path
+        description: The ID of the board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /systems/{systemId}/boards/{boardId}/devices/alarm/properties:
+    put:
+      tags:
+      - Alarm
+      summary: Set information about alarm properties of specific alarm connected to specific board within specific system
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: boardId
+        in: path
+        description: The ID of the board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: alarmProperties
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/AlarmPropertiesDto'
+      responses:
+        "200":
+          description: Success
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /systems/{systemId}/boards/{boardId}/devices/alarm/state:
+    put:
+      tags:
+      - Alarm
+      summary: Set information about alarm state of specific alarm connected to specific board within specific system
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: boardId
+        in: path
+        description: The ID of the board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: alarmState
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/AlarmStateDto'
+      responses:
+        "200":
+          description: Success
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /systems/{systemId}/boards/{boardId}/devices/alarm/{alarmId}:
+    get:
+      tags:
+      - Alarm
+      summary: Get information about specific alarm connected to specific board within specific system
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: boardId
+        in: path
+        description: The ID of the board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: alarmId
+        in: path
+        description: The ID of the alarm connected to specific board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alarm'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /systems/{systemId}/boards/{boardId}/devices/alarm/{alarmId}/log:
+    get:
+      tags:
+      - Alarm
+      summary: Get information about alarm triggers of specific alarm connected to specific board within specific system
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: boardId
+        in: path
+        description: The ID of the board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: alarmId
+        in: path
+        description: The ID of the alarm connected to specific board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /systems/{systemId}/boards/{boardId}/devices/alarm/{alarmId}/sensors:
+    get:
+      tags:
+      - Alarm sensors
+      summary: Get information about alarm sensors of specific alarm connected to specific board within specific system
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: boardId
+        in: path
+        description: The ID of the board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: alarmId
+        in: path
+        description: The ID of the alarm connected to specific board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AlarmSensor'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+    put:
+      tags:
+      - Alarm sensors
+      summary: Set state of alarm sensor of specific alarm connected to specific board within specific system
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: boardId
+        in: path
+        description: The ID of the board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: alarmId
+        in: path
+        description: The ID of the alarm connected to specific board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: alarmSensorState
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/AlarmSensorStateDto'
+      responses:
+        "200":
+          description: Success
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /systems/{systemId}/boards/{boardId}/devices/alarm/{alarmId}/sensorsRPi:
+    put:
+      tags:
+      - Alarm sensors
+      summary: Set state of alarm sensor of specific alarm connected to specific board within specific system (ONLY FOR RASPBERRY PI)
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: boardId
+        in: path
+        description: The ID of the board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: alarmId
+        in: path
+        description: The ID of the alarm connected to specific board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: alarmSensorStateRPi
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/AlarmSensorStateRPiDto'
+      responses:
+        "200":
+          description: Success
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /systems/{systemId}/boards/{boardId}/devices/lights/states:
+    get:
+      tags:
+      - Lights
+      summary: Get information about current states of all lights connected to specific board within specific system
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: boardId
+        in: path
+        description: The ID of the board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SwitchableLight'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+    put:
+      tags:
+      - Lights
+      summary: Set states of lights connected to specific board within specific system
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: boardId
+        in: path
+        description: The ID of the board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: lightsStates
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/SwitchableLightDto'
+      responses:
+        "200":
+          description: Success
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /systems/{systemId}/boards/{boardId}/devices/lights/states/{lightId}:
+    get:
+      tags:
+      - Lights
+      summary: Get information about a current state of a specific light connected to specific board within specific system
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: boardId
+        in: path
+        description: The ID of the board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: lightId
+        in: path
+        description: The ID of the light connected to board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: An array of light readings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SwitchableLight'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /systems/{systemId}/boards/{boardId}/devices/sensors/humidity/states:
+    get:
+      tags:
+      - Humidity sensors
+      summary: Get information about current states of all humidity sensors connected to specific board within specific system
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: boardId
+        in: path
+        description: The ID of the board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: An array of humidity sensors states
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HumiditySensor'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /systems/{systemId}/boards/{boardId}/devices/sensors/humidity/states/{sensorId}:
+    get:
+      tags:
+      - Humidity sensors
+      summary: Get information about a current state of a specific humidity sensor connected to specific board within specific system
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: boardId
+        in: path
+        description: The ID of the board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: sensorId
+        in: path
+        description: The ID of the sensor connected to board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: A humidity sensor state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HumiditySensor'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /systems/{systemId}/boards/{boardId}/devices/sensors/sunlight/states:
+    get:
+      tags:
+      - Sunlight sensors
+      summary: Get information about current states of all sunlight sensors connected to specific board within specific system
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: boardId
+        in: path
+        description: The ID of the board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: An array of sunlight sensors states
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SunlightSensor'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /systems/{systemId}/boards/{boardId}/devices/sensors/sunlight/states/{sensorId}:
+    get:
+      tags:
+      - Sunlight sensors
+      summary: Get information about current states of a specific sunlight sensor connected to specific board within specific system
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: boardId
+        in: path
+        description: The ID of the board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: sensorId
+        in: path
+        description: The ID of the sensor connected to board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: A sunlight sensor state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SunlightSensor'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /systems/{systemId}/boards/{boardId}/devices/sensors/temperature/states:
+    get:
+      tags:
+      - Temperature sensors
+      summary: Get information about current states of all temperature sensors connected to specific board within specific system
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: boardId
+        in: path
+        description: The ID of the board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: An array of temperature sensors states
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TemperatureSensor'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /systems/{systemId}/boards/{boardId}/devices/sensors/temperature/states/{sensorId}:
+    get:
+      tags:
+      - Temperature sensors
+      summary: Get information about current state of a specific temperature sensor connected to specific board within specific system
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: boardId
+        in: path
+        description: The ID of the board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: sensorId
+        in: path
+        description: The ID of the sensor connected to board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: A temperature sensor state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemperatureSensor'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /system/{systemId}/board/{boardId}/devices/door-locks/set/{isOn}:
+    put:
+      tags:
+      - Door locks
+      summary: Set state of all door locks connected to specific board within specific system
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: boardId
+        in: path
+        description: The ID of the board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: isOn
+        in: path
+        description: The state of the door locks
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Door lock's state
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DoorLock'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /system/{systemId}/board/{boardId}/devices/door-locks/set/{doorLockId}/{isOn}:
+    put:
+      tags:
+      - Door locks
+      summary: Set state of a specified door lock connected to specific board within specific system
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: boardId
+        in: path
+        description: The ID of the board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: doorLockId
+        in: path
+        description: The ID of the door lock
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: isOn
+        in: path
+        description: The state of the door lock
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Door lock's state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DoorLock'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /system/{systemId}/board/{boardId}/devices/door-locks/states/{doorLockId}:
+    get:
+      tags:
+      - Door locks
+      summary: Get information about current state of a specified door lock connected to specific board within specific system
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: boardId
+        in: path
+        description: The ID of the board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: doorLockId
+        in: path
+        description: The ID of the door lock
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Door lock's state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DoorLock'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /system/{systemId}/board/{boardId}/devices/door-locks/states:
+    get:
+      tags:
+      - Door locks
+      summary: Get information about current states of all door locks connected to specific board within specific system
+      parameters:
+      - name: systemId
+        in: path
+        description: The ID of the system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: boardId
+        in: path
+        description: The ID of the board within system to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Door lock's states
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DoorLock'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /users:
+    get:
+      tags:
+      - Users
+      summary: Get information about all users from the database
+      responses:
+        "200":
+          description: An array of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /users/{userId}:
+    get:
+      tags:
+      - Users
+      summary: Get information about a specific user from the database
+      parameters:
+      - name: userId
+        in: path
+        description: The ID of the user to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: A user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /auth/register:
+    post:
+      tags:
+      - Auth
+      summary: Register a user
+      parameters:
+      - name: userRegistrationDto
+        in: query
+        description: The dto of a registered user
+        required: true
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/UserRegistrationDto'
+      responses:
+        "200":
+          description: A user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+  /auth/login:
+    post:
+      tags:
+      - Auth
+      summary: Login a user
+      parameters:
+      - name: userLoginDto
+        in: query
+        description: The dto of a logging in user
+        required: true
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/UserLoginDto'
+      responses:
+        "200":
+          description: A user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+components:
+  schemas:
+    AlarmPropertiesDto:
+      type: object
+      properties:
+        alarm_id:
+          type: string
+          description: The ID of the alarm
+        name:
+          type: string
+          description: The name of the alarm
+        details:
+          type: string
+          description: The details of the alarm
+        accessCode:
+          type: string
+          description: The access code of the alarm
+    AlarmSensorStateDto:
+      type: object
+      properties:
+        alarmSensorId:
+          type: string
+          description: The ID of the alarm sensor
+        alarmId:
+          type: string
+          description: The ID of the alarm which contains the alarm sensor
+        isOn:
+          type: integer
+          description: 0 - off | 1 - on
+          format: int64
+        movementDetected:
+          type: integer
+          description: 0 - movement not detected | 1 - movement detected
+          format: int64
+    AlarmSensorStateRPiDto:
+      type: object
+      properties:
+        alarmSensorId:
+          type: string
+          description: The ID of the alarm sensor
+        alarmId:
+          type: string
+          description: The ID of the alarm which contains the alarm sensor
+        movementDetected:
+          type: integer
+          description: 0 - movement not detected | 1 - movement detected
+          format: int64
+    AlarmStateDto:
+      type: object
+      properties:
+        Alarm_Id:
+          type: string
+          description: The ID of the alarm
+        IsActive:
+          type: integer
+          description: 0 - not active | 1 - active
+          format: int64
+        IsTriggered:
+          type: integer
+          description: 0 - not triggered | 1 - triggered
+          format: int64
+    HumiditySensorMeasureDto:
+      type: object
+      properties:
+        sensorId:
+          type: integer
+          description: The ID of the humidity sensor
+          format: int64
+        humidity:
+          type: number
+          description: The value of humidity
+        dateTime:
+          type: string
+          description: Date of the measure
+    SunlightSensorMeasureDto:
+      type: object
+      properties:
+        sensorId:
+          type: integer
+          description: The ID of the sunlight sensor
+          format: int64
+        lightValue:
+          type: number
+          description: The value of sunlight
+          format: double
+        dateTime:
+          type: string
+          description: Date of the measure
+    TemperatureSensorMeasureDto:
+      type: object
+      properties:
+        sensorId:
+          type: integer
+          description: The ID of the sunlight sensor
+          format: int64
+        temperature:
+          type: number
+          description: The value of temperature
+          format: double
+        dateTime:
+          type: string
+          description: Date of the measure
+    DoorLockStateDto:
+      type: object
+      properties:
+        doorLock_Id:
+          type: string
+          description: Door lock's ID
+        system_Id:
+          type: string
+          description: ID of the system inside of which the door lock is mounted
+        isOn:
+          type: int
+          description: State of door lock
+    UserLoginDto:
+      type: object
+      properties:
+        Email:
+          type: string
+          description: User's email address
+        Password:
+          type: string
+          description: User's password
+    UserRegistrationDto:
+      type: object
+      properties:
+        Email:
+          type: string
+          description: User's email address
+        Password:
+          type: string
+          description: User's password
+        FirstName:
+          type: string
+          description: User's first name
+        LastName:
+          type: string
+          description: User's last name
+    SwitchableLightDto:
+      type: object
+      properties:
+        lightId:
+          type: integer
+          description: The ID of switchable light
+          format: int64
+        isOn:
+          type: integer
+          description: 0 - off | 1 - on
+          format: int64
+    SwitchableLightDtoBoard:
+      type: object
+      properties:
+        lightId:
+          type: integer
+          description: The ID of switchable light
+          format: int64
+        isOn:
+          type: boolean
+          description: False - off | True - on
+          format: int64
+    Alarm:
+      type: object
+      properties:
+        Alarm_Id:
+          type: string
+          description: The ID of alarm
+        isOn:
+          type: integer
+          description: 0 - off | 1 - on
+          format: int64
+    AlarmSensor:
+      type: object
+      properties:
+        Alarm_Sensor_Id:
+          type: string
+          description: The ID of alarm sensor
+        Alarm_Id:
+          type: string
+          description: The ID of alarm to which the sensor is connected
+        Name:
+          type: string
+          description: The name given to alarm sensor
+        Details:
+          type: string
+          description: The details given to alarm sensor
+        Is_On:
+          type: integer
+          description: 0 - off | 1 - on
+          format: int64
+        Movement_Detected:
+          type: integer
+          description: 0 - not detected | 1 - detected
+          format: int64
+    AlarmTrigger:
+      type: object
+      properties:
+        AlarmTrigger_Id:
+          type: string
+          description: The details given to alarm sensor
+        Alarm_Id:
+          type: string
+          description: The details given to alarm sensor
+        DateTime:
+          type: string
+          description: The date of the alarm trigger
+    HumiditySensor:
+      type: object
+      properties:
+        Sensor_Id:
+          type: string
+          description: The ID of the humidity sensor
+        System_Id:
+          type: string
+          description: The ID of a BOARD to which te sensor is connected
+        Name:
+          type: string
+          description: The name given to the humidity sensor
+        Details:
+          type: string
+          description: The details given to the humidity sensor
+        Value:
+          type: number
+          description: The humidity measure of the humidity sensor
+          format: double
+    SunlightSensor:
+      type: object
+      properties:
+        Sensor_Id:
+          type: string
+          description: The ID of the sunlight sensor
+        System_Id:
+          type: string
+          description: The ID of a BOARD to which the sensor is connected
+        Name:
+          type: string
+          description: The name given to the sunlight sensor
+        Details:
+          type: string
+          description: The details given to the sunlight sensor
+        Value:
+          type: number
+          description: The sunlight measure of the sunlight sensor
+          format: double
+    SwitchableLight:
+      type: object
+      properties:
+        Switchable_Light_Id:
+          type: string
+          description: The ID of switchable light
+        System_Id:
+          type: string
+          description: The ID of a BOARD to which the light is connected
+        Name:
+          type: string
+          description: The name given to the switchable light
+        Details:
+          type: string
+          description: The details given to the switchable light
+        Value:
+          type: integer
+          description: 0 - off | 1 - on
+          format: int64
+    TemperatureSensor:
+      type: object
+      properties:
+        Sensor_Id:
+          type: string
+          description: The ID of the temperature sensor
+        System_Id:
+          type: string
+          description: The ID of a BOARD to which te sensor is connected
+        Name:
+          type: string
+          description: The name given to the temperature sensor
+        Details:
+          type: string
+          description: The details given to the temperature sensor
+        Value:
+          type: number
+          description: The temperature measure of the temperature sensor
+          format: double
+    HumiditySensorLog:
+      type: object
+      properties:
+        Log_Id:
+          type: integer
+          description: The ID of the humidity sensor log
+        Humidity:
+          type: number
+          description: The humidity measure of the humidity sensor
+          format: double
+        DateTime:
+          type: string
+          description: The date of the measure
+        Sensor_Id:
+          type: string
+          description: The ID of the humidity sensor
+    SunlightSensorLog:
+      type: object
+      properties:
+        Log_Id:
+          type: integer
+          description: The ID of the sunlight sensor log
+        LightValue:
+          type: number
+          description: The sunlight measure of the sunlight sensor
+          format: double
+        DateTime:
+          type: string
+          description: The date of the measure
+        Sensor_Id:
+          type: string
+          description: The ID of the sunlight sensor
+    TemperatureSensorLog:
+      type: object
+      properties:
+        Log_Id:
+          type: integer
+          description: The ID of the temperature sensor log
+        Temperature:
+          type: number
+          description: The temperature measure of the sunlight sensor
+          format: double
+        DateTime:
+          type: string
+          description: The date of the measure
+        Sensor_Id:
+          type: string
+          description: The ID of the temperature sensor
+    DoorLock:
+      type: object
+      properties:
+        DoorLock_Id:
+          type: string
+          description: Door lock's ID
+        System_Id:
+          type: string
+          description: ID of the system inside of which the door lock is mounted
+        Name:
+          type: string
+          description: Door lock's name
+        Details:
+          type: string
+          description: Door lock's details
+        IsOn:
+          type: int
+          description: State of door lock
+    User:
+      type: object
+      properties:
+        User_Id:
+          type: string
+          description: The ID of the User
+        Email:
+          type: string
+          description: The email address of the User
+        Password:
+          type: string
+          description: The password of the User
+        FirstName:
+          type: string
+          description: The first name of the User
+        LastName:
+          type: string
+          description: The last name of the User
+    System:
+      type: object
+      properties:
+        System_Id:
+          type: string
+          description: The ID of the system
+        Name:
+          type: string
+          description: The given name of the system

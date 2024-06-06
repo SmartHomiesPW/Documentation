@@ -1,0 +1,298 @@
+openapi: 3.0.0
+info:
+  version: 1.0.2
+  title: api
+  description: The API for the SmartHome project
+paths:
+  /lights/states:
+    get:
+      tags:
+        - LightControl
+      summary: Get the states of all lights
+      responses:
+        '200':
+          description: An array of light states
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LightState'
+        '400':
+          description: Error
+  /lights/set/{lightId}/{state}:
+    get:
+      summary: Change the state of a specific light
+      tags:
+        - LightControl
+      parameters:
+        - name: lightId
+          in: path
+          description: The ID of the light to change the state of
+          required: true
+          schema:
+            type: integer
+        - name: state
+          in: path
+          description: The new state of the light (1 for on, 0 for off)
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Light state changed successfully
+        '201':
+          description: Light already with desired state
+        '400':
+          description: Error
+  /sensors/temperature:
+    get:
+      summary: Get the readings from all temperature sensors
+      tags: 
+        - Sensors
+      responses:
+        '200':
+          description: An array of temperature readings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TemperatureReading'
+        '400':
+          description: Error
+  /sensors/humidity:
+    get:
+      summary: Get the readings from all humidity sensors
+      tags: 
+        - Sensors
+      responses:
+        '200':
+          description: An array of humidity readings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HumidityReading'
+        '400':
+          description: Error 
+  /sensors/light:
+    get:
+      summary: Get the readings from all light sensors
+      tags: 
+        - Sensors
+      responses:
+        '200':
+          description: An array of light readings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LightReading'
+        '400':
+          description: Error
+          
+  /alarm/get:
+    get:
+      summary: Get the states of all motion sensors
+      tags: 
+        - Alarm
+      responses:
+        '200':
+          description: An array of motion sensors states
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AlarmState'
+        '400':
+          description: Error     
+  /alarm/set/{sensorId}/{newState}:
+    post:
+      summary: Change the state of a specific motion sensor
+      tags:
+        - Alarm
+      parameters:
+        - name: sensorId
+          in: path
+          description: The ID of the motion sensor to change the state of
+          required: true
+          schema:
+            type: integer
+        - name: newState
+          in: path
+          description: The new state of the motion sensor (1 for on, 0 for off)
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: motion sensor state changed successfully
+        '201':
+          description: motion sensor already with desired state
+        '400':
+          description: Error
+
+  /door-locks/states:
+    get:
+      summary: Get the states of all locks
+      tags: 
+        - Lock
+      responses:
+        '200':
+          description: An array of locks states
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LockState'
+        '500':
+          description: Error     
+  /door-locks/set/{lockId}/{newState}:
+    post:
+      summary: Change the state of a specific lock
+      tags:
+        - Lock
+      parameters:
+        - name: lockId
+          in: path
+          description: The ID of the lock to change the state of
+          required: true
+          schema:
+            type: integer
+        - name: newState
+          in: path
+          description: The new state of the lock (1 for on, 0 for off)
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: motion sensor state changed successfully
+        '201':
+          description: motion sensor already with desired state
+        '500':
+          description: Error
+  /door-locks/states/{lockId}:
+    get:
+      summary: Get the state of a specific lock
+      tags: 
+        - Lock
+      responses:
+        '200':
+          description: A lock state
+          content:
+            application/json:
+              schema:
+                type: object
+                '#/components/schemas/LockState'
+        '500':
+          description: Error    
+
+  /door-locks/set/{newState}:
+    post:
+      summary: Change the state of all locks
+      tags:
+        - Lock
+      parameters:
+        - name: newState
+          in: path
+          description: The new state of all locks (1 for on, 0 for off)
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: locks' states changed successfully
+        '201':
+          description: locks' states already have the desired values
+        '500':
+          description: Error
+components:
+  schemas:
+    LockState:
+      type: object
+      properties:
+        doorLock_Id:
+          type: string
+          description: id of Lock
+        isOn:
+          type: string
+          description: true if Lock is open, false if not
+
+    AlarmState:
+      type: object
+      properties:
+        alarmId:
+          type: string
+          description: id of alarm system
+        alarmSensorId:
+          type: string
+          description: id of motion sensor
+        isOn:
+          type: number
+          format: integer
+          description: The temperature reading
+        movementDetected:
+          type: number
+          format: integer
+          description: 1 if there was movement detected, 0 otherwise
+    TemperatureReading:
+      type: object
+      properties:
+        temperature:
+          type: number
+          format: float
+          description: The temperature reading
+        dateTime:
+          type: string
+          format: date-time
+          description: The date and time of the reading
+        sensorId:
+          type: integer
+          format: int64
+          description: The ID of the sensor associated with the reading
+    HumidityReading:
+      type: object
+      properties:
+        humidity:
+          type: number
+          format: float
+          description: The humidity value
+        dateTime:
+          type: string
+          format: date-time
+          description: The date and time of the humidity reading
+        sensorId:
+          type: integer
+          format: int64
+          description: The ID of the sensor associated with the humidity reading      
+    LightReading:
+      type: object
+      properties:
+        lightValue:
+          type: number
+          format: float
+          description: The light value
+        dateTime:
+          type: string
+          format: date-time
+          description: The date and time of the light reading
+        sensorId:
+          type: integer
+          format: int64
+          description: The ID of the sensor associated with the light reading      
+    LightState:
+      type: object
+      properties:
+        lightId:
+          type: integer
+          format: int64
+          description: The ID of the light
+        isOn:
+          type: boolean
+          description: The binary state of the light (true for on, false for off)  
